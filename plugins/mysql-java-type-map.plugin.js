@@ -38,12 +38,16 @@ MysqlJavaTypeMapFilterPlugin.prototype.do = function (tables,config) {
         }
         table.abbr = "${prefix}";
         table.prefix = table.tableName.split("_")[0];
+        let fieldArray = []
         for(let field of table.fieldArray){
             let fieldType = field.fieldType.replace(/\(\d+,\d\)/,"");
             field.javaType = tsTypeMap[fieldType];
             if(!field.javaType){
-                console.log(`${field.fieldType} not map javaType`);
+                console.log(`${field.fieldType} not map javaType and skip`);
+            }else{
+                fieldArray.push(field);
             }
         }
+        table.fieldArray = fieldArray;
     }
 };
