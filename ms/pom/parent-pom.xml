@@ -85,14 +85,14 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>releases</id>
+            <id>ts-releases</id>
             <name>Internal Releases</name>
-            <url>http://mvn.service/nexus/content/repositories/releases</url>
+            <url>http://nexus.dev.tysu.com.cn/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots</id>
+            <id>ts-snapshots</id>
             <name>Internal Snapshots</name>
-            <url>http://mvn.service/nexus/content/repositories/snapshots</url>
+            <url>http://nexus.dev.tysu.com.cn/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
