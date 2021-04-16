@@ -13,4 +13,65 @@
         <result property="${field.lowerCamelName}" column="${field.fieldName}"/><%})%>
     </resultMap>
 
+    <insert id="batchInsert" parameterType="${table.lowerCamelName}VO" useGeneratedKeys="true" keyProperty="id">
+        <foreach collection="list" item="item" separator=";">
+            insert INTO `${table.tableName}` (
+            <trim suffixOverrides=",">
+                <%table.fieldArray.filter(function(field){return !field.sqIgnore}).forEach(function(field,index){%>
+                <if test="item.${field.lowerCamelName}!=null">`${field.fieldName}`,</if><%})%>
+            </trim>
+            )
+
+            VALUES
+
+            (
+            <trim suffixOverrides=",">
+
+                <%table.fieldArray.filter(function(field){return !field.sqIgnore}).forEach(function(field,index){%>
+                <if test="item.${field.lowerCamelName}!=null"> #{item.${field.lowerCamelName}},</if><%})%>
+            </trim>
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insert${table.upperCamelName}" parameterType="${table.lowerCamelName}VO" useGeneratedKeys="true" keyProperty="id">
+
+        INSERT INTO `${table.tableName}` (
+        <trim suffixOverrides=",">
+            <%table.fieldArray.filter(function(field){return !field.sqIgnore}).forEach(function(field,index){%>
+            <if test="${field.lowerCamelName}!=null">`${field.fieldName}`,</if><%})%>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <%table.fieldArray.filter(function(field){return !field.sqIgnore}).forEach(function(field,index){%>
+            <if test="${field.lowerCamelName}!=null"> #{${field.lowerCamelName}},</if><%})%>
+        </trim>
+        )
+
+    </insert>
+
+    <update id="update${table.upperCamelName}" parameterType="${table.lowerCamelName}VO">
+        update `${table.tableName}`
+        SET
+            <trim suffixOverrides=",">
+           <%table.fieldArray.filter(function(field){return !field.sqIgnore}).forEach(function(field,index){%>
+            <if test="${field.lowerCamelName}!=null">`${field.fieldName}`=#{${field.lowerCamelName}},</if><%})%>
+            </trim>
+        WHERE
+          id=#{id}
+    </update>
+
+    <update id="batchUpdate" parameterType="${table.lowerCamelName}VO">
+        <foreach collection="list" item="item" separator=";">
+        update `${table.tableName}`
+        SET
+            <trim suffixOverrides=",">
+           <%table.fieldArray.filter(function(field){return !field.sqIgnore}).forEach(function(field,index){%>
+            <if test="item.${field.lowerCamelName}!=null">`${field.fieldName}`=#{item.${field.lowerCamelName}},</if><%})%>
+            </trim>
+        WHERE
+          id=#{item.id}
+        </foreach>
+    </update>
 </mapper>
