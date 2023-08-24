@@ -5,6 +5,7 @@ import java.util.Date;
 
 
 public class BaseVO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private Integer dataStatus;
@@ -16,6 +17,7 @@ public class BaseVO implements Serializable {
     private String createdName;
     private Long modifiedBy;
     private String modifiedName;
+
 
     public Long getId() {
         return id;
