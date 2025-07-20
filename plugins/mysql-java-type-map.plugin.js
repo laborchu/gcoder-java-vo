@@ -29,6 +29,7 @@ MysqlJavaTypeMapFilterPlugin.prototype.do = function (tables,config) {
         "mediumtext":"String",
         "blob":"byte[]",
         "bit":"Boolean",
+        "json":"Object",
     }
     for(let table of tables){
         let splitArray = table.tableName.split("_");
