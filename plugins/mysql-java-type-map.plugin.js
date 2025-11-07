@@ -42,12 +42,8 @@ MysqlJavaTypeMapFilterPlugin.prototype.do = function (tables,config) {
         let fieldArray = []
         for(let field of table.fieldArray){
             let fieldType = field.fieldType.replace(/\(\d+,\d\)/,"");
-            field.javaType = tsTypeMap[fieldType];
-            if(!field.javaType){
-                fieldArray.push("Object");
-            }else{
-                fieldArray.push(field);
-            }
+            field.javaType = tsTypeMap[fieldType] || 'Object';
+            fieldArray.push(field);
         }
         table.fieldArray = fieldArray;
     }
