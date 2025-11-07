@@ -30,7 +30,6 @@ MysqlJavaTypeMapFilterPlugin.prototype.do = function (tables,config) {
         "blob":"byte[]",
         "bit":"Boolean",
         "json":"Object",
-        "enum":"String",
     }
     for(let table of tables){
         let splitArray = table.tableName.split("_");
@@ -45,7 +44,7 @@ MysqlJavaTypeMapFilterPlugin.prototype.do = function (tables,config) {
             let fieldType = field.fieldType.replace(/\(\d+,\d\)/,"");
             field.javaType = tsTypeMap[fieldType];
             if(!field.javaType){
-                console.log(`${field.fieldType} not map javaType and skip`);
+                fieldArray.push("Object");
             }else{
                 fieldArray.push(field);
             }
